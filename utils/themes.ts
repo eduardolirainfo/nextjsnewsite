@@ -1,11 +1,10 @@
-import { Nfc, NfcSharp } from '@mui/icons-material';
 import { PaletteMode } from '@mui/material';
 import { ThemeOptions } from '@mui/material/styles';
 
 const primaryPalette = {
     main: '#09D3AD',
-    light: '#3ADBBD',
-    dark: '#069379',
+    light: '#00baff',
+    dark: '#945bf1',
     contrastText: '#FFFFFF',
 };
 
@@ -47,8 +46,8 @@ const successPalette = {
 const lightThemeOptions: ThemeOptions = {
     palette: {
         background: {
-            default: '#FFFFFF',
-            paper: '#EBEDF0',
+            default: '#f7f7fc',
+            paper: '#f5f5f9',
         },
         text: {
             primary: '#1C1E21',
@@ -67,8 +66,8 @@ const lightThemeOptions: ThemeOptions = {
 const darkThemeOptions: ThemeOptions = {
     palette: {
         background: {
-            default: '#18191A',
-            paper: '#242526',
+            default: '#14142a',
+            paper: '#18182e',
         },
         text: {
             primary: '#F5F6F7',
