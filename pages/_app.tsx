@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { AppProps } from 'next/app'
 import '../styles/globals.css'
-import HeaderComponent from '../Header.component'
+import HeaderComponent from "../components/Header.component"
 import { createTheme, CssBaseline, PaletteMode, useTheme, ThemeProvider, Badge, Typography, Box, Divider } from '@mui/material'
 
 import MailIcon from '@mui/icons-material/Mail'
