@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import { FC } from 'react';
+import Image from 'next/image'
 
 interface Props {
     title: string
@@ -6,18 +7,20 @@ interface Props {
     mainImageUrl: string
 }
 
+const imageLoader = require("./../utils/loader.js");
+
 const BlogHeaderComponent: FC<Props> = ({
     title,
     dateString,
-    mainImageUrl
+    mainImageUrl,
 }) => {
     return (
         <div style={{ width: '600px', margin: 'auto' }}>
-            <img style={{ width: '600px' }} src={mainImageUrl} alt={title} />
             <h1>{title}</h1>
-            <p>{dateString}</p>
+            <Image style={{ width: '600px' }} src={mainImageUrl} alt={title} loader={imageLoader} />
+            <p>Posted on {dateString}</p>
         </div>
     )
 }
 
-export default BlogHeaderComponent
+export default BlogHeaderComponent;
