@@ -8,3 +8,19 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
+
+pre code.hljs {
+  background: linear-gradient(114.67deg, rgba(78, 75, 102, .78) 5%, rgba(78, 75, 102, .08) 74.94%);
+  mix-blend-mode: normal;
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(78, 75, 102, .78);
+  --tw-drop-shadow: drop-shadow(0 10px 8px rgba(0, 0, 0, .04)) drop-shadow(0 4px 3px rgba(0, 0, 0, .1));
+  border-radius: 1.5rem;
+  margin-bottom: 1.5rem;
+
+}
+
+pre code.hljs:hover {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}

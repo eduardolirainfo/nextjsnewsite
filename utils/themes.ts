@@ -64,6 +64,7 @@ const lightThemeOptions: ThemeOptions = {
 };
 
 const darkThemeOptions: ThemeOptions = {
+
     palette: {
         background: {
             default: '#14142a',
