@@ -23,4 +23,4 @@ const BlogHeaderComponent: FC<Props> = ({
     )
 }
 
-export default BlogHeaderComponent;
+export default BlogHeaderComponent
