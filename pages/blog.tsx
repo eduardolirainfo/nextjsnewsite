@@ -1,23 +1,99 @@
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Head from 'next/head'
 
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { Post } from '../models/Post.interface'
-import { Badge, Typography, Box, Divider } from '@mui/material'
-import MailIcon from '@mui/icons-material/Mail'
+import { Tag, tagFilters } from '../models/Tag'
+
+import { TextField, Typography, Chip, Stack, Paper } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+
 import CardComponent from '../components/Card.component'
 
 const Blog: NextPage = ({
     posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const [filteredPosts, setFilteredPosts] = useState<Post[]>(posts)
+    const [postTitles, setPostTitles] = useState<string[]>(posts.map((post: Post) => post.metaData.title.toLowerCase()))
+    const [searchString, setSearchString] = useState('')
+    const [isAllTag, setIsAllTag] = useState(true)
+    const [tags, setTags] = useState<Tag[]>([])
+
+    useEffect(() => {
+        const filteredPostsTitles: string[] = [...postTitles].filter(
+            (title: string) => title.indexOf(searchString.trim().toLowerCase()) !== -1
+        )
+        const refilteredPosts: Post[] = [...posts].filter((post: Post) =>
+            filteredPostsTitles.includes(post.metaData.title.toLowerCase())
+        )
+        setFilteredPosts(refilteredPosts)
+    }, [searchString, postTitles, posts])
+
+    useEffect(() => {
+        if (tags.length > 0) {
+            setIsAllTag(false)
+        } else {
+            setIsAllTag(true)
+        }
+    }, [tags])
+
     return (
         <>
+            <Typography align='center' color='primary' variant='h1'>
+                Blog
+            </Typography>
+            <Paper component='form' sx={{ width: 400, margin: '20px auto', boxShadow: 0 }}>
+                <TextField style={{ width: 400 }}
+                    placeholder='Search...'
+                    value={searchString}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchString(e.target.value)}
+                    inputProps={{
+                        style: {
+                            fontSize: 20,
+                        },
+                        startAdornment: (
+                            <SearchIcon style={{ fontSize: 30, marginRight: 8 }} />
+
+                        )
+                    }}
+                />
+            </Paper>
+            <Paper sx={{ height: 50, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Stack direction='row' spacing={1}>
+                    <Chip onClick={() => {
+                        setTags([])
+                        setIsAllTag(true)
+                    }}
+                        label='All'
+                        variant='outlined'
+                        color={isAllTag ? 'secondary' : 'default'} />
+                    {tagFilters.map((tag: Tag, index: number) => (
+                        <Chip onClick={() => {
+                            if (!tags.includes(tag)) {
+                                setTags([...tags, tag])
+                            } else {
+                                const selectedTags = [...tags].filter(
+                                    (selectedTags: Tag) => selectedTags !== tag
+                                )
+                                setTags(selectedTags)
+                            }
+                        }} label={tag} variant='outlined' color={tags.includes(tag) ? 'secondary' : 'default'} key={index} />
+                    ))}
+                </Stack>
+            </Paper>
+
             <div style={{ display: 'flex' }}>
-                {posts.map((post: Post, index: number) => (
-                    <CardComponent key={index} post={post} />
-                ))}
+                {filteredPosts.map((post: Post, index: number) => {
+                    if (!isAllTag &&
+                        post.metaData.tags.some((tag: Tag) => tags.includes(tag))
+                    ) {
+                        return <CardComponent key={index} post={post} />
+                    } else if (isAllTag)
+                        return <CardComponent key={index} post={post} />
+                })}
             </div>
         </>
     )
